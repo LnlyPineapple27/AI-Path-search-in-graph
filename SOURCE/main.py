@@ -4,7 +4,8 @@
  Email: 18127078@student.hcmus.edu.vn
  AI lab01 Project
 """
-from BFS import BFS_Search
+from Breadth_first_search import Breadth_first_search as BFS
+from Uniform_cost_search import Uniform_cost_search as UCS
 from Classes import Maze
 from timeit import default_timer as timer
 
@@ -47,11 +48,11 @@ board = Maze(size,input_list,goal)
 # ------------------------
 start = timer()
 
-res = BFS_Search(board, 46, 6)
+res = UCS(board, 46, 6)
 end = timer()
 # The default_timer returns the time in microsecond -> *1000 to get milisec
 Timer = (end - start)*1000 
-if res == None:
+if res is None:
     print("Can't find any possible path :(")
 elif res == ([],[]):
     print("The goal is at starting point")

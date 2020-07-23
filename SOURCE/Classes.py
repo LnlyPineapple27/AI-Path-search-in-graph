@@ -14,6 +14,9 @@ class Node:
     
     def adjacent_list(self):
         return self.near_by
+    
+    
+    
 class Maze:
     def __init__(self, size: int, node_list: list, goal):
         if (size > 0) and (goal >= 0) and (goal < (size * size)) and node_list:
@@ -42,6 +45,9 @@ class Maze:
             return self.board[num // self.size][num % self.size]                
         else:
             return None
+        
+    def getSize(self):
+        return self.size
 
 
 def getLocation(num: int, size: int):

@@ -1,19 +1,19 @@
 from Classes import Maze
 
-def BFS_Search(graph: Maze, start, goal):
+def Breadth_first_search(graph: Maze, start, goal):
     # keep track of explored nodes
     expanded_list = []
     # keep track of all the paths to be checked
-    testing_paths = [[start]]
+    path_list = [[start]]
  
     # return nothing if goal is start
     if start == goal:
         return [], []
  
-    # test run all given paths until testing_paths is empty
-    while testing_paths:
-        # pop the oldest path from the testing_paths -> FIFO
-        path = testing_paths.pop(0)
+    # test run all given paths until path_list is empty
+    while path_list:
+        # pop the oldest path from the path_list -> FIFO
+        path = path_list.pop(0)
         # get the furthest node in path
         node = path[-1]
         if node not in expanded_list:
@@ -26,7 +26,7 @@ def BFS_Search(graph: Maze, start, goal):
             for neighbour in neighbours:
                 new_path = list(path)
                 new_path.append(neighbour)
-                testing_paths.append(new_path)
+                path_list.append(new_path)
                 # return path if neighbour is goal
                 if neighbour == goal:
                     expanded_list.append(node)
