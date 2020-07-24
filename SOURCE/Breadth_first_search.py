@@ -35,4 +35,4 @@ def Breadth_first_search(graph: Maze, start, goal):
             # mark node as explored
             expanded_list.append(node)
     # if no result can be found
-    return None
+    return None, None

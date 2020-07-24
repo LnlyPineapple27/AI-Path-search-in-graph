@@ -12,17 +12,17 @@ class Evaluation:
         return self.cost
     
     def getPath(self):
-        if self.path:
-            return self.path
-        else:
-            return None
+        return self.path
+        
         
     def getFurthestNode(self):
         if self.path:
-            return self.path[-1]
+            return int(self.path[-1])
         return None
     
-    
+    def __str__(self):
+        return "C: " + str(self.cost) + "- P: " + str(self.path) 
+
 def lastValue(path):
     return path[-1]
 
@@ -52,13 +52,11 @@ def ExploreFrontier(frontier_list):
 
 
 def is_in_frontier(node, frontier):
-    index = 0
-    for item in frontier:
+    for index in range(len(frontier)):
+        item: Evaluation = frontier[index]
         path_item: list = item.getPath()
-        print("T: ",type(path_item))
         if path_item[-1] == node:
             return index
-        index += 1
     return None
 
 
@@ -73,7 +71,7 @@ def Uniform_cost_search(graph: Maze, start, goal):
     frontier = []
     frontier.append(Evaluation(path_cost, path))
     
-    while frontier:
+    while 1:
         item = ExploreFrontier(frontier)
         if item is None:
             break
@@ -81,7 +79,7 @@ def Uniform_cost_search(graph: Maze, start, goal):
         current_node = item.getFurthestNode()
         current_path = (item.getPath()).copy()
         current_cost = item.getCost()
-        
+        # print(current_path)
         expanded.append(current_node)
         
         # if goal was in frontier
@@ -89,8 +87,13 @@ def Uniform_cost_search(graph: Maze, start, goal):
             return expanded, current_path     
         
         neighbours = (graph.getNode(current_node)).adjacent_list()
+        '''
+        for index in range(len(neighbours)):
+            print(index, neighbours[index])
+        '''    
         for neighbour in neighbours:
-            new_path = current_path.append(neighbour)
+            new_path = current_path.copy()
+            new_path.append(neighbour)
             new_cost = current_cost + step_cost
             new_item = Evaluation(new_cost, new_path)
         
@@ -103,5 +106,5 @@ def Uniform_cost_search(graph: Maze, start, goal):
                     frontier.pop(in_frontier)
                     frontier.append(new_item)
     
-    return None
+    return None, None
     
