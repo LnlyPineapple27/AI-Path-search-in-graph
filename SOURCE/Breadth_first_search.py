@@ -30,6 +30,7 @@ def Breadth_first_search(graph: Maze, start, goal):
                 # return path if neighbour is goal
                 if neighbour == goal:
                     expanded_list.append(node)
+                    expanded_list.append(goal) # task requirement
                     return expanded_list, new_path 
  
             # mark node as explored

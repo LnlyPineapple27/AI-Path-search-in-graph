@@ -1,0 +1,4 @@
+Greedy_best_first_search
+Runtime: 11 minutes
+Expanded list:	0 1 2 3 7 8 13 12 17 18 22 23
+Path found:	0->1->2->7->8->13->12->17->22->23
