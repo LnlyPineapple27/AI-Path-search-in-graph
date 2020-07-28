@@ -1,50 +1,45 @@
-from Classes import Maze, Evaluation, ExploreFrontier, is_in_frontier
+from Classes import Maze, ExploreFrontier, is_in_frontier, tracePath
 
 step_cost = 1
 
 def Uniform_cost_search(graph: Maze, start, goal):
     if goal == start:
         return [], []
-    
-    path_cost = 0
-    path = []
-    path.append(start)
-    expanded = []    
+
+    init = {"Node": start, "Parent": None, "Cost": 0}
+    expanded = []
+    expanded_with_parent = []
     frontier = []
-    frontier.append(Evaluation(path_cost, path))
-    
+    frontier.append(init)
+
     while True:
         item = ExploreFrontier(frontier)
         if item is None:
             break
-        
-        current_node = item.getFurthestNode()
-        current_path = list(item.getPath())
-        current_cost = item.getCost()
-        # print(current_path)
-        expanded.append(current_node)
-        
+
+        expanded.append(item["Node"])
+        expanded_with_parent.append(item)
+
         # if goal was in frontier
-        if current_node == goal:
-            return expanded, current_path     
-        
-        nearby_nodes = (graph.getNode(current_node)).adjacent_list()
-    
+        if item["Node"] == goal:
+            current_path = tracePath(expanded_with_parent, start, item["Node"])
+            return expanded, current_path
+
+        nearby_nodes = (graph.getNode(item["Node"])).adjacent_list()
+
         for node in nearby_nodes:
-            new_path = list(current_path)
-            new_path.append(node)
-            new_cost = current_cost + step_cost
-            new_item = Evaluation(new_cost, new_path)
-        
-            in_frontier = is_in_frontier(node, frontier)
-            if in_frontier is None:
+            new_cost = item["Cost"] + step_cost
+            new_item = {"Node": node, "Parent": item["Node"], "Cost": new_cost}
+
+            location_in_frontier = is_in_frontier(node, frontier)
+            if location_in_frontier is None:
                 if node not in expanded:
                     frontier.append(new_item)
             else:
-                if frontier[in_frontier].getCost() > new_cost:
-                    frontier.pop(in_frontier)
+                temp = frontier[location_in_frontier]
+                if temp["Cost"] > new_item["Cost"]:
+                    frontier.pop(location_in_frontier)
                     frontier.append(new_item)
                     # no need to sort frontier 'cause ExploreFrontier can handle it
-    
+
     return None, None
-    

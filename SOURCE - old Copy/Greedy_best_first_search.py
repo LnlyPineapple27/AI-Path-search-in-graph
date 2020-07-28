@@ -1,46 +1,47 @@
-from Classes import Maze, ExploreFrontier, is_in_frontier, tracePath
-
+from Classes import Maze, Evaluation, ExploreFrontier, is_in_frontier
 
 def Greedy_best_first_search(graph: Maze, start, goal):
     if goal == start:
         return [], []
+    
+    path = []
+    path.append(start)
+    path_heuristic = graph.manhattan_heuristic_calculator(start)
 
-    start_heuristic = graph.manhattan_heuristic_calculator(start)
-    init = {"Node": start, "Parent": None, "Cost": start_heuristic}
-    expanded = []
-    expanded_with_parent = []
+    expanded = []    
     frontier = []
-    frontier.append(init)
-
+    frontier.append(Evaluation(path_heuristic, path))
+    
     while True:
         item = ExploreFrontier(frontier)# find the best next node to explore
         if item is None:
             break
-
-        expanded.append(item["Node"])
-        expanded_with_parent.append(item)
-
+        
+        current_node = item.getFurthestNode()
+        current_path = list(item.getPath())
+        expanded.append(current_node)
+        
         # if goal was in frontier
-        if item["Node"] == goal:
-            current_path = tracePath(expanded_with_parent, start, item["Node"])
-            return expanded, current_path
-
-        nearby_nodes = (graph.getNode(item["Node"])).adjacent_list()
-
+        if current_node == goal:
+            return expanded, current_path     
+        
+        nearby_nodes = (graph.getNode(current_node)).adjacent_list()
+       
         for node in nearby_nodes:
+            new_path = list(current_path)
+            new_path.append(node)
             new_cost = graph.manhattan_heuristic_calculator(node)
-            new_item = {"Node": node, "Parent": item["Node"], "Cost": new_cost}
-
+            new_item = Evaluation(new_cost, new_path)
+        
             location_in_frontier = is_in_frontier(node, frontier)
             if location_in_frontier is None:
                 if node not in expanded:
                     frontier.append(new_item)
             else:
-                temp = frontier[location_in_frontier]
-                if temp["Cost"] > new_item["Cost"]:
+                if frontier[location_in_frontier].getCost() > new_cost:
                     frontier.pop(location_in_frontier)
                     frontier.append(new_item)
                     # no need to sort frontier 'cause ExploreFrontier can handle it
 
     return None, None
-
+    

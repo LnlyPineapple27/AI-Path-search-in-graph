@@ -8,7 +8,6 @@ from Breadth_first_search import Breadth_first_search
 from Uniform_cost_search import Uniform_cost_search
 from Greedy_best_first_search import Greedy_best_first_search
 from A_star_graph_search import A_star_graph_search
-from Iterative_deepening_search import Iterative_deepening_search
 
 from Classes import Maze
 from file_tools import OutputData, ImportData, choose_input_files, printResult
@@ -39,12 +38,11 @@ if __name__ == "__main__":
         algorithms = [(Breadth_first_search),
                       (Uniform_cost_search),
                       (Greedy_best_first_search),
-                      (A_star_graph_search),
-                      (Iterative_deepening_search)]
+                      (A_star_graph_search)]
+
         for method in algorithms:
             result = method(board, start, goal)
             #print(method.__name__ + " completed\n")
             OutputData("..\OUTPUT\ ", method.__name__, result)
             printResult(method.__name__,result)
 
-        

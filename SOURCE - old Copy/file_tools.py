@@ -56,18 +56,14 @@ def OutputData(file_dir: str, algorithm_name: str, data):
     file.close()
 
 def printResult(algorithm_name, data):
-    x = len(data)
-    if x == 2:
-        expanded = data[0]
-        path = data[1]  
-        if expanded is None or path is None:
-            print(algorithm_name + " unable to find any possible path!\nMaybe something went wrong :<")
-            if expanded is not None:          
-                print("\tExpanded list:\t" + printList(expanded," "))
-        else:
-            print("\n" + algorithm_name)
-            print("\tRuntime:\t\t" + str(len(expanded) - 1) + " minutes")
-            print("\tExpanded list:\t" + printList(expanded," "))
-            print("\tPath found:\t\t" + printList(path,"->"))
+    expanded = data[0]
+    path = data[1]  
+    if expanded is None or path is None:
+        print(algorithm_name + " unable to find any possible path!\nMaybe something went wrong :<")
 
-        
+    else:
+        print("\n" + algorithm_name)
+        print("\tRuntime:\t\t" + str(len(expanded) - 1) + " minutes")
+        print("\tExpanded list:\t" + printList(expanded," "))
+        print("\tPath found:\t\t" + printList(path,"->"))
+    
