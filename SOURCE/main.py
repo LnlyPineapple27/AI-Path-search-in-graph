@@ -27,20 +27,21 @@ if __name__ == "__main__":
         goal = int(input_list.pop(-1))
         if (goal < 0) or (goal > int(size * size)):
             print("\n[Warning]: Goal doesn't exist in Maze!\n->This might result in long runtime and uncompleted result!!\n")
+        
         board = Maze(size,input_list,goal)
         
         # start = input("Enter the number of starting point: ")
         # start = int(start)
         start = 0
-
+        
         print("Starting point:\t", start)
         print("Goal:\t\t\t", goal)
         
         algorithms = [(Breadth_first_search),
                       (Uniform_cost_search),
+                      (Iterative_deepening_search),
                       (Greedy_best_first_search),
-                      (A_star_graph_search),
-                      (Iterative_deepening_search)]
+                      (A_star_graph_search)]
         for method in algorithms:
             result = method(board, start, goal)
             #print(method.__name__ + " completed\n")

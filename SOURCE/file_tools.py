@@ -40,34 +40,85 @@ def printList(list_obj, seperator: str):
     return res
 
 def OutputData(file_dir: str, algorithm_name: str, data):
-    expanded = data[0]
-    path = data[1]
-    file_dir += (algorithm_name + ".txt")
-    file = open(file_dir, "w")
-    file.write(algorithm_name)
-    if expanded is None or path is None:
-        file.write(" unable to find any possible path!\nMaybe something went wrong :<")
-
-    else:
-        file.write("\nRuntime: " + str(len(expanded) - 1) + " minutes")
-        file.write("\nExpanded list:\t" + printList(expanded, " "))
-        file.write("\nPath found:\t" + printList(path,"->"))
-
-    file.close()
-
-def printResult(algorithm_name, data):
-    x = len(data)
-    if x == 2:
-        expanded = data[0]
-        path = data[1]  
-        if expanded is None or path is None:
-            print(algorithm_name + " unable to find any possible path!\nMaybe something went wrong :<")
-            if expanded is not None:          
-                print("\tExpanded list:\t" + printList(expanded," "))
-        else:
-            print("\n" + algorithm_name)
-            print("\tRuntime:\t\t" + str(len(expanded) - 1) + " minutes")
-            print("\tExpanded list:\t" + printList(expanded," "))
-            print("\tPath found:\t\t" + printList(path,"->"))
-
+    if len(data) == 2:          
+        file_dir += (algorithm_name + ".txt")
+        file = open(file_dir, "w")
+        file.write(algorithm_name)
         
+        if algorithm_name == "Iterative_deepening_search":
+            
+            expanded_by_depth = data[0]
+            path = data[1]  
+            if path is None:
+                file.write(" unable to find any possible path!\nMaybe something went wrong :<")
+                if expanded_by_depth is not None: 
+                    count = 0
+                    file.write("\n\tExpanded list:")
+                    for i in range(len(expanded_by_depth)):
+                        count += (len(expanded_by_depth[i]))
+                        file.write("\n\t\tDepth = " + str(i)+ ": " + str(expanded_by_depth[i]))                   
+                    file.write("\n\tTime to escape maze:\t\t" + str(count) + " minutes")
+            else:        
+                file.write("\n\tExpanded list:")
+                count = 0
+                for i in range(len(expanded_by_depth)):
+                    count += (len(expanded_by_depth[i]))
+                    file.write("\n\t\tDepth = " + str(i)+ ": " + str(expanded_by_depth[i]))                          
+                file.write("\n\tPath found:\t\t" + printList(path,"->"))
+                file.write("\n\tTime to escape maze:\t\t" + str(count) + " minutes")
+
+        else:    
+            expanded = data[0]
+            path = data[1]  
+            if path is None:
+                file.write(" unable to find any possible path!\nMaybe something went wrong :<")
+                if expanded is not None:                              
+                    file.write("\n\tExpanded list:\t" + str(expanded))
+                    file.write("\n\tTime to escape maze:\t\t" + str(len(expanded)) + " minutes")
+            else:
+                file.write("\n\tExpanded list:\t" + str(expanded))
+                file.write("\n\tPath found:\t\t" + printList(path,"->"))
+                file.write("\n\tTime to escape maze:\t\t" + str(len(expanded)) + " minutes")
+        file.close()
+        
+def printResult(algorithm_name, data):   
+    if len(data) == 2:    
+        if algorithm_name == "Iterative_deepening_search":
+            
+            expanded_by_depth = data[0]
+            path = data[1]  
+            if path is None:
+                print(algorithm_name + " unable to find any possible path!\nMaybe something went wrong :<")
+                if expanded_by_depth is not None: 
+                    count = 0
+                    print("\tExpanded list:")
+                    for i in range(len(expanded_by_depth)):
+                        count += (len(expanded_by_depth[i]))
+                        print("\t\tDepth = " + str(i)+ ": " + str(expanded_by_depth[i]))                  
+                    print("\tTime to escape maze:\t\t" + str(count) + " minutes")
+            else:        
+                print("\n" + algorithm_name)
+                print("\tExpanded list:")
+                count = 0
+                for i in range(len(expanded_by_depth)):
+                    count += (len(expanded_by_depth[i]))
+                    print("\t\tDepth = " + str(i)+ ": " + str(expanded_by_depth[i]))      
+                    
+                print("\tPath found:\t\t" + printList(path,"->"))
+                print("\tTime to escape maze:\t\t" + str(count) + " minutes")
+
+        else:    
+            expanded = data[0]
+            path = data[1]  
+            if path is None:
+                print(algorithm_name + " unable to find any possible path!\nMaybe something went wrong :<")
+                if expanded is not None:                              
+                    print("\tExpanded list:\t" + str(expanded))
+                    print("\tTime to escape maze:\t\t" + str(len(expanded)) + " minutes")
+            else:
+                print("\n" + algorithm_name)
+                print("\tExpanded list:\t" + str(expanded))
+                print("\tPath found:\t\t" + printList(path,"->"))
+                print("\tTime to escape maze:\t\t" + str(len(expanded)) + " minutes")
+    
+            

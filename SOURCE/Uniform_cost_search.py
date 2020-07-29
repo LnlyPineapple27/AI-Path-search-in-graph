@@ -1,10 +1,11 @@
-from Classes import Maze, ExploreFrontier, is_in_frontier, tracePath
+from Classes import Maze
+from Frontier_processing import ExploreFrontier, is_in_frontier, tracePath
 
 step_cost = 1
 
 def Uniform_cost_search(graph: Maze, start, goal):
     if goal == start:
-        return [], []
+        return [goal], [goal]
 
     init = {"Node": start, "Parent": None, "Cost": 0}
     expanded = []
@@ -42,4 +43,4 @@ def Uniform_cost_search(graph: Maze, start, goal):
                     frontier.append(new_item)
                     # no need to sort frontier 'cause ExploreFrontier can handle it
 
-    return None, None
+    return expanded, None

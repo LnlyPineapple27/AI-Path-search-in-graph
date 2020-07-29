@@ -1,10 +1,11 @@
-from Classes import Maze, ExploreFrontier, is_in_frontier, tracePath
+from Classes import Maze
+from Frontier_processing import ExploreFrontier, is_in_frontier, tracePath
 
 step_cost = 1
 
 def A_star_graph_search(graph: Maze, start, goal):
     if goal == start:
-        return [], []
+        return [goal], [goal]
 
     start_heuristic = graph.manhattan_heuristic_calculator(start)
     init = {"Node": start, "Parent": None, "Cost": start_heuristic}
@@ -45,6 +46,6 @@ def A_star_graph_search(graph: Maze, start, goal):
                     frontier.append(new_item)
                     # no need to sort frontier 'cause ExploreFrontier can handle it
 
-    return None, None
+    return expanded, None
 
     

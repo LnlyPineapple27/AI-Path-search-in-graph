@@ -1,4 +1,5 @@
-from Classes import Maze, tracePath
+from Classes import Maze
+from Frontier_processing import tracePath
 
 def Breadth_first_search(graph: Maze, start, goal):
     expanded = []
@@ -9,7 +10,7 @@ def Breadth_first_search(graph: Maze, start, goal):
     frontier.append(init)
     # return nothing if goal is start
     if start == goal:
-        return [], []
+        return [goal], [goal]
 
     while frontier:
         current_node = frontier.pop(0)
@@ -31,4 +32,4 @@ def Breadth_first_search(graph: Maze, start, goal):
             expanded.append(node)
             expanded_with_parent.append(current_node)
 
-    return None, None
+    return expanded, None
